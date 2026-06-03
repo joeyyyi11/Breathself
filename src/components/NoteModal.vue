@@ -4,7 +4,7 @@
       <h2>{{ isEdit ? '编辑笔记' : '新建笔记' }}</h2>
 
       <div class="field">
-        <label class="label" for="note-title">标题</label>
+        <label class="label" for="note-title">提要</label>
         <input
           id="note-title"
           v-model="form.title"

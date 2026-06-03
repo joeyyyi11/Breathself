@@ -74,7 +74,7 @@
   --ease-soft: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
   /* ---- Type ---- */
-  --font-sans: 'Inter', 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  --font-sans: 'PingFang SC','STZhongsong','Microsoft YaHei','Inter',Helvetica, Arial,'Helvetica Neue',   'Hiragino Sans GB',  sans-serif;
   --letter-spacing-normal: -0.01em;
   --letter-spacing-tight: -0.16px;
 

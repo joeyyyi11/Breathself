@@ -6,7 +6,7 @@
           <circle cx="16" cy="16" r="13" fill="#00754A" />
           <circle cx="16" cy="16" r="6" fill="#f2f0eb" />
         </svg>
-        <span class="brand-text">觉察笔记</span>
+        <span class="brand-text">BreathSelf</span>
       </router-link>
 
       <nav class="nav-links">
@@ -15,7 +15,7 @@
             <path d="M21 12a9 9 0 1 1-3-6.7" />
             <polyline points="21 4 21 10 15 10" />
           </svg>
-          再来一次
+          呼吸空间
         </button>
 
         <button v-if="showNewColumn" class="btn btn-outline" @click="$emit('new-column')">

@@ -108,7 +108,7 @@
       </section>
 
       <footer class="meta">
-        <p>觉察笔记 v0.1 · 数据存储于 localStorage</p>
+        <p>Breathself v0.1 · 数据存储于 localStorage</p>
       </footer>
     </main>
   </div>

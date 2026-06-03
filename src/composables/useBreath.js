@@ -1,39 +1,39 @@
 import { ref, computed, onUnmounted } from 'vue'
 
 /**
- * 4-4-4-4 呼吸节奏：吸气 → 屏息 → 呼气 → 屏息（每段默认 4 秒）
- * 提供：phase / phaseLabel / remaining / progress / start / pause / reset
+ * Apple Watch 原生呼吸：吸气4s → 呼气4.57s，单轮≈8.57s，一分钟7次，无屏息
  */
 export function useBreath() {
+  // 苹果原版呼吸分段：只有吸气、呼气，去掉hold屏息
   const PHASES = [
-    { id: 'inhale',  label: '吸气', duration: 4 },
-    { id: 'hold1',   label: '屏息', duration: 4 },
-    { id: 'exhale',  label: '呼气', duration: 4 },
-    { id: 'hold2',   label: '屏息', duration: 4 }
+    { id: 'inhale', label: '吸气', duration: 4 },
+    { id: 'exhale', label: '呼气', duration: 4.57 }
   ]
-  const CYCLE = PHASES.reduce((s, p) => s + p.duration, 0) // 16s
+  const CYCLE = PHASES.reduce((s, p) => s + p.duration, 0) // 一轮周期 = 8.57s
 
-  const totalDuration = ref(60)   // 总时长（秒）
-  const elapsed = ref(0)          // 已经过去的时间（秒，可含小数）
+  const totalDuration = ref(60)   // 默认总时长60s(1分钟)
+  const elapsed = ref(0)
   const running = ref(false)
   const finished = ref(false)
 
   let rafId = null
   let lastTs = 0
 
+  // 剩余总秒数
   const remaining = computed(() =>
     Math.max(0, Math.ceil(totalDuration.value - elapsed.value))
   )
 
+  // 全局总进度 0~1
   const progress = computed(() => {
     if (totalDuration.value <= 0) return 0
     return Math.min(1, elapsed.value / totalDuration.value)
   })
 
-  // 在当前 cycle 中的位置（秒）
+  // 当前周期内已过时间
   const cycleElapsed = computed(() => elapsed.value % CYCLE)
 
-  // 当前阶段
+  // 获取当前阶段（吸气/呼气）
   const currentPhase = computed(() => {
     let acc = 0
     for (const p of PHASES) {
@@ -43,7 +43,7 @@ export function useBreath() {
     return PHASES[PHASES.length - 1]
   })
 
-  // 当前阶段进度（0~1）
+  // 当前阶段内部进度 0~1
   const phaseProgress = computed(() => {
     let acc = 0
     for (const p of PHASES) {
@@ -55,23 +55,25 @@ export function useBreath() {
     return 1
   })
 
-  // 圆形缩放比例：吸气 0.55 → 1.0，呼气 1.0 → 0.55，屏息保持
+  // 圆环缩放：吸气放大 0.55→1，呼气缩小1→0.55
   const orbScale = computed(() => {
     const phase = currentPhase.value
     const p = phaseProgress.value
     const min = 0.55
     const max = 1.0
     switch (phase.id) {
-      case 'inhale':  return min + (max - min) * p
-      case 'hold1':   return max
-      case 'exhale':  return max - (max - min) * p
-      case 'hold2':   return min
-      default:        return min
+      case 'inhale':
+        return min + (max - min) * p
+      case 'exhale':
+        return max - (max - min) * p
+      default:
+        return min
     }
   })
 
   const phaseLabel = computed(() => currentPhase.value.label)
 
+  // 帧动画
   const tick = (ts) => {
     if (!running.value) return
     if (!lastTs) lastTs = ts
@@ -88,6 +90,7 @@ export function useBreath() {
     rafId = requestAnimationFrame(tick)
   }
 
+  // 开始，可自定义总时长
   const start = (durationSec) => {
     if (typeof durationSec === 'number' && durationSec > 0) {
       totalDuration.value = durationSec

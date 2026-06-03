@@ -5,19 +5,19 @@ const routes = [
     path: '/',
     name: 'breath',
     component: () => import('@/views/BreathView.vue'),
-    meta: { title: '呼吸引导 · 觉察笔记' }
+    meta: { title: '呼吸引导 · Breathself' }
   },
   {
     path: '/board',
     name: 'board',
     component: () => import('@/views/BoardView.vue'),
-    meta: { title: '我的笔记面板 · 觉察笔记' }
+    meta: { title: '我的笔记面板 · Breathself' }
   },
   {
     path: '/settings',
     name: 'settings',
     component: () => import('@/views/SettingsView.vue'),
-    meta: { title: '设置 · 觉察笔记' }
+    meta: { title: '设置 · Breathself' }
   },
   {
     path: '/:pathMatch(.*)*',

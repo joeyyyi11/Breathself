@@ -57,6 +57,8 @@ const cardStyle = computed(() => {
   const alpha = Math.max(0.08, Math.min(1, props.note.opacity / 100))
   // 顶部颜色稍重一些，营造层次
   const bg = `linear-gradient(180deg, rgba(${r},${g},${b},${alpha}) 0%, rgba(${r},${g},${b},${(alpha * 0.85).toFixed(3)}) 100%), #ffffff`
+  // const bg = `linear-gradient(180deg, rgba(${r},${g},${b},${alpha}) 0%, rgba(${r},${g},${b},${(alpha * 0.85).toFixed(3)}) 100%)`
+
   return {
     background: bg,
     borderLeft: `3px solid ${emotion.value.color}`

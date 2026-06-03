@@ -9,8 +9,8 @@
             <circle cx="16" cy="16" r="6" fill="#f2f0eb" />
           </svg>
         </div>
-        <h1>觉察笔记</h1>
-        <p class="subtitle">每一次呼吸，都是回到当下的邀请</p>
+        <h1>breathe to connect yourself</h1>
+        <p class="subtitle">每一次呼吸，都是贴近自己的邀请</p>
       </header>
 
       <!-- 模式选择：动画开始前 -->
@@ -58,14 +58,14 @@
         </div>
         <div class="progress-meta">
           <span class="remaining">{{ remaining }} 秒</span>
-          <span class="breath-count">{{ breathCount }} 个呼吸循环</span>
+          <!-- <span class="breath-count">{{ breathCount }} 个呼吸循环</span> -->
         </div>
       </div>
 
       <!-- 结束语 -->
       <transition name="fade-up">
         <div v-if="finished" class="finish-msg">
-          <p class="finish-title">✨ 开始整理你的思绪</p>
+          <p class="finish-title">开始整理你的思绪</p>
           <p class="finish-sub">即将跳转到笔记面板…</p>
           <div class="finish-dots">
             <span v-for="i in 3" :key="i" class="dot-pulse" :style="{ animationDelay: `${(i - 1) * 0.2}s` }" />
