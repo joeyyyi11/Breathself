@@ -1,0 +1,34 @@
+# 屏蔽 node_modules、打包产物、本地配置，不让这些大文件上传 Github，只上传自己写的源码
+#【最重要：依赖文件夹，绝对不上传】
+node_modules/
+
+# 锁文件保留（package-lock.json要上传，不要删，方便别人装依赖）
+# package-lock.json 不忽略！
+
+# vite打包产物，上线打包后的dist不上传
+dist/
+build/
+.vite/
+
+# 日志文件
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 本地环境配置（隐私密钥，禁止上传）
+.env
+.env.local
+.env.*.local
+
+# vscode本地配置、插件缓存
+.vscode/
+.idea/
+
+# 系统垃圾文件
+.DS_Store
+Thumbs.db
+
+# 临时缓存
+.cache/
+*.tmp
