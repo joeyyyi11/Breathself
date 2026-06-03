@@ -1,0 +1,285 @@
+/* ========= Reusable Components ========= */
+
+/* ---- Buttons (Starbucks pill system) ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-sans);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: var(--letter-spacing-normal);
+  line-height: 1.2;
+  padding: 7px 16px;
+  min-height: 36px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  transition: all var(--duration-fast) ease;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Primary filled (Green Accent) */
+.btn-primary {
+  background: var(--color-green-accent);
+  color: var(--color-white);
+  border-color: var(--color-green-accent);
+}
+.btn-primary:hover:not(:disabled) {
+  background: #006a42;
+  border-color: #006a42;
+}
+
+/* Primary outlined */
+.btn-outline {
+  background: transparent;
+  color: var(--color-green-accent);
+  border-color: var(--color-green-accent);
+}
+.btn-outline:hover:not(:disabled) {
+  background: rgba(0, 117, 74, 0.06);
+}
+
+/* Dark outlined */
+.btn-ghost {
+  background: transparent;
+  color: var(--color-text);
+  border-color: rgba(0, 0, 0, 0.16);
+}
+.btn-ghost:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--color-text);
+}
+
+/* Black filled */
+.btn-dark {
+  background: var(--color-black);
+  color: var(--color-white);
+  border-color: var(--color-black);
+}
+
+/* Inverted (white on green) */
+.btn-inverted {
+  background: var(--color-white);
+  color: var(--color-green-accent);
+  border-color: var(--color-white);
+}
+
+/* Danger */
+.btn-danger {
+  background: var(--color-red);
+  color: var(--color-white);
+  border-color: var(--color-red);
+}
+.btn-danger:hover:not(:disabled) {
+  background: #b41c11;
+}
+
+/* Larger pill (for hero CTAs) */
+.btn-lg {
+  font-size: 1.6rem;
+  padding: 12px 28px;
+  min-height: 44px;
+}
+
+/* ---- Card ---- */
+.card {
+  background: var(--color-white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-3);
+}
+
+/* ---- Inputs ---- */
+.input,
+.textarea,
+.select {
+  width: 100%;
+  background: var(--color-white);
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 1.5rem;
+  color: var(--color-text);
+  transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+}
+.input:focus,
+.textarea:focus,
+.select:focus {
+  outline: none;
+  border-color: var(--color-green-accent);
+  box-shadow: 0 0 0 3px rgba(0, 117, 74, 0.12);
+}
+.textarea {
+  min-height: 120px;
+  line-height: 1.5;
+}
+
+.label {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-text-soft);
+  margin-bottom: 6px;
+}
+
+/* ---- Modal Backdrop ---- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 57, 50, 0.42);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-modal);
+  padding: var(--space-3);
+  animation: backdropIn var(--duration-base) var(--ease-soft);
+}
+
+.modal {
+  background: var(--color-white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-modal);
+  padding: var(--space-4);
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalIn var(--duration-base) var(--ease-soft);
+}
+
+.modal h2 {
+  font-size: 2.0rem;
+  font-weight: 600;
+  color: var(--color-starbucks-green);
+  margin-bottom: var(--space-3);
+}
+
+.modal-actions {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: flex-end;
+  margin-top: var(--space-4);
+}
+
+@keyframes backdropIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ---- Emotion chip ---- */
+.emotion-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 1.3rem;
+  font-weight: 500;
+  border: 1.5px solid transparent;
+  background: var(--color-white);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+}
+.emotion-chip:hover {
+  transform: translateY(-1px);
+}
+.emotion-chip.is-active {
+  color: var(--color-white);
+  font-weight: 600;
+}
+.emotion-chip .dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+/* ---- Slider ---- */
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: rgba(0, 0, 0, 0.12);
+  outline: none;
+  cursor: pointer;
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-green-accent);
+  cursor: pointer;
+  border: 3px solid var(--color-white);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  transition: transform var(--duration-fast) ease;
+}
+.slider::-webkit-slider-thumb:active {
+  transform: scale(1.1);
+}
+.slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-green-accent);
+  cursor: pointer;
+  border: 3px solid var(--color-white);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* ---- Tag / Pill ---- */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 1.1rem;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--color-text-soft);
+  backdrop-filter: blur(4px);
+}
+
+/* ---- Container ---- */
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-left: var(--outer-gutter);
+  padding-right: var(--outer-gutter);
+}
+@media (min-width: 768px) {
+  .container {
+    padding-left: var(--outer-gutter-md);
+    padding-right: var(--outer-gutter-md);
+  }
+}
+@media (min-width: 1024px) {
+  .container {
+    padding-left: var(--outer-gutter-lg);
+    padding-right: var(--outer-gutter-lg);
+  }
+}

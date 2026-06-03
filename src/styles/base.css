@@ -1,0 +1,124 @@
+/* ========= Reset & Base ========= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* anchor rem at 10px (62.5% of 16px) */
+  font-size: 62.5%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 1.6rem; /* 16px */
+  line-height: 1.5;
+  letter-spacing: var(--letter-spacing-normal);
+  color: var(--color-text);
+  background-color: var(--color-neutral-warm);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- Type defaults ---- */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: var(--letter-spacing-normal);
+  line-height: 1.2;
+  color: var(--color-text);
+}
+
+h1 {
+  font-size: 2.4rem;
+  color: var(--color-starbucks-green);
+  font-weight: 600;
+}
+h2 {
+  font-size: 2.0rem;
+  font-weight: 400;
+}
+h3 {
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+p {
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+a {
+  color: var(--color-green-accent);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+a:hover {
+  color: var(--color-starbucks-green);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: 1.5rem;
+  letter-spacing: var(--letter-spacing-normal);
+  color: var(--color-text);
+}
+
+textarea {
+  resize: vertical;
+}
+
+::selection {
+  background: var(--color-green-light);
+  color: var(--color-house-green);
+}
+
+/* ---- Utility scroll ---- */
+.scroll-x {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.scroll-x::-webkit-scrollbar {
+  height: 8px;
+}
+.scroll-x::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scroll-x::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+}
+.scroll-x::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.24);
+}
+
+/* ---- Route transition ---- */
+.route-fade-enter-active,
+.route-fade-leave-active {
+  transition: opacity var(--duration-base) var(--ease-soft);
+}
+.route-fade-enter-from,
+.route-fade-leave-to {
+  opacity: 0;
+}

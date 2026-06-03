@@ -1,0 +1,85 @@
+/* ========= Starbucks-inspired Design Tokens ========= */
+:root {
+  /* ---- Color: Brand Greens (four-tier) ---- */
+  --color-starbucks-green: #006241;      /* H1 / 品牌主色 */
+  --color-green-accent: #00754A;         /* 主 CTA / Frap */
+  --color-house-green: #1E3932;          /* 深色 band / footer */
+  --color-green-uplift: #2b5148;         /* 装饰强调 */
+  --color-green-light: #d4e9e2;          /* 浅绿背景 */
+
+  /* ---- Color: Gold (Rewards only) ---- */
+  --color-gold: #cba258;
+  --color-gold-light: #dfc49d;
+  --color-gold-lightest: #faf6ee;
+
+  /* ---- Surface ---- */
+  --color-white: #ffffff;
+  --color-neutral-cool: #f9f9f9;
+  --color-neutral-warm: #f2f0eb;        /* 主画布 */
+  --color-ceramic: #edebe9;             /* 次画布 */
+  --color-black: #000000;
+
+  /* ---- Text ---- */
+  --color-text: rgba(0, 0, 0, 0.87);
+  --color-text-soft: rgba(0, 0, 0, 0.58);
+  --color-text-faint: rgba(0, 0, 0, 0.40);
+  --color-text-white: #ffffff;
+  --color-text-white-soft: rgba(255, 255, 255, 0.70);
+
+  /* ---- Emotion Palette ---- */
+  --emo-anxiety: #D2691E;      /* 焦虑 - 暖橙 */
+  --emo-calm: #1E3932;         /* 平静 - House Green */
+  --emo-gratitude: #cba258;    /* 感恩 - Gold */
+  --emo-awareness: #006241;    /* 觉察 - Starbucks Green */
+  --emo-sad: #2b5148;          /* 悲伤 - Uplift */
+  --emo-energy: #00754A;       /* 活力 - Green Accent */
+
+  /* ---- Semantic ---- */
+  --color-red: #c82014;
+  --color-yellow: #fbbc05;
+
+  /* ---- Radius ---- */
+  --radius-card: 12px;
+  --radius-pill: 50px;
+  --radius-small: 4px;
+
+  /* ---- Spacing (rem-based, 1rem=10px) ---- */
+  --space-1: 0.4rem;
+  --space-2: 0.8rem;
+  --space-3: 1.6rem;
+  --space-4: 2.4rem;
+  --space-5: 3.2rem;
+  --space-6: 4rem;
+  --space-7: 4.8rem;
+  --space-8: 5.6rem;
+  --space-9: 6.4rem;
+
+  /* ---- Gutter ---- */
+  --outer-gutter: 1.6rem;
+  --outer-gutter-md: 2.4rem;
+  --outer-gutter-lg: 4rem;
+
+  /* ---- Shadow (whisper-soft, layered) ---- */
+  --shadow-card: 0 0 0.5px rgba(0, 0, 0, 0.14), 0 1px 1px rgba(0, 0, 0, 0.24);
+  --shadow-card-hover: 0 2px 6px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.10);
+  --shadow-nav: 0 1px 3px rgba(0, 0, 0, 0.10), 0 2px 2px rgba(0, 0, 0, 0.06), 0 0 2px rgba(0, 0, 0, 0.07);
+  --shadow-frap: 0 0 6px rgba(0, 0, 0, 0.24), 0 8px 12px rgba(0, 0, 0, 0.14);
+  --shadow-frap-active: 0 0 6px rgba(0, 0, 0, 0.24), 0 8px 12px rgba(0, 0, 0, 0);
+  --shadow-modal: 0 4px 12px rgba(0, 0, 0, 0.10), 0 16px 32px rgba(0, 0, 0, 0.16);
+
+  /* ---- Motion ---- */
+  --duration-fast: 0.2s;
+  --duration-base: 0.3s;
+  --ease-out: ease-out;
+  --ease-soft: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* ---- Type ---- */
+  --font-sans: 'Inter', 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  --letter-spacing-normal: -0.01em;
+  --letter-spacing-tight: -0.16px;
+
+  /* ---- Z-index ---- */
+  --z-nav: 100;
+  --z-frap: 200;
+  --z-modal: 1000;
+}
