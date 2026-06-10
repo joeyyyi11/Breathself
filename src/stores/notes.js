@@ -16,6 +16,31 @@ export const EMOTIONS = [
 export const getEmotion = (id) =>
   EMOTIONS.find((e) => e.id === id) || EMOTIONS[3]
 
+const DAY_MS = 24 * 60 * 60 * 1000
+
+/** 示例笔记距今天数：3 / 10 / 45 / 200 / 400 天前（对应不同时间范围筛选） */
+const DEMO_NOTE_DAYS_AGO = {
+  'n-1': 3,
+  'n-2': 10,
+  'n-3': 45,
+  'n-4': 200,
+  'n-5': 400
+}
+
+const demoNoteCreatedAt = (noteId) =>
+  Date.now() - (DEMO_NOTE_DAYS_AGO[noteId] ?? 10) * DAY_MS
+
+const syncDemoNoteTimes = (columns) => {
+  columns.forEach((col) => {
+    col.notes.forEach((note) => {
+      if (DEMO_NOTE_DAYS_AGO[note.id] != null) {
+        note.createdAt = demoNoteCreatedAt(note.id)
+      }
+    })
+  })
+  return columns
+}
+
 // 预置 4 列分类 + 示例笔记
 const defaultState = () => ({
   columns: [
@@ -30,7 +55,7 @@ const defaultState = () => ({
           body: '又是周五，想到周报要总结一周成果就有点紧张。其实这周做的事不少，只是觉得"不够亮眼"。',
           emotion: 'anxiety',
           opacity: 70,
-          createdAt: Date.now() - 1000 * 60 * 60 * 20
+          createdAt: demoNoteCreatedAt('n-1')
         },
         {
           id: 'n-2',
@@ -38,7 +63,7 @@ const defaultState = () => ({
           body: '今天的提案没被采纳，回看自己讲解时其实节奏太快了，下次可以提前演练一遍。',
           emotion: 'awareness',
           opacity: 40,
-          createdAt: Date.now() - 1000 * 60 * 60 * 6
+          createdAt: demoNoteCreatedAt('n-2')
         }
       ]
     },
@@ -53,7 +78,7 @@ const defaultState = () => ({
           body: '听到她声音很高兴，下次主动多打一些。',
           emotion: 'gratitude',
           opacity: 50,
-          createdAt: Date.now() - 1000 * 60 * 60 * 30
+          createdAt: demoNoteCreatedAt('n-3')
         }
       ]
     },
@@ -68,7 +93,7 @@ const defaultState = () => ({
           body: '深夜回看一天，发现很多焦虑其实是"怕被评价"。看见即是松动的开始。',
           emotion: 'awareness',
           opacity: 60,
-          createdAt: Date.now() - 1000 * 60 * 60 * 2
+          createdAt: demoNoteCreatedAt('n-4')
         }
       ]
     },
@@ -83,7 +108,7 @@ const defaultState = () => ({
           body: '冲了一杯手冲，第一口的香气让人安静下来。',
           emotion: 'gratitude',
           opacity: 30,
-          createdAt: Date.now() - 1000 * 60 * 60 * 9
+          createdAt: demoNoteCreatedAt('n-5')
         }
       ]
     }
@@ -102,7 +127,7 @@ const loadFromStorage = () => {
     const parsed = JSON.parse(raw)
     if (!parsed.columns || !Array.isArray(parsed.columns)) return defaultState()
     return {
-      columns: parsed.columns,
+      columns: syncDemoNoteTimes(parsed.columns),
       settings: { ...defaultState().settings, ...(parsed.settings || {}) }
     }
   } catch (e) {

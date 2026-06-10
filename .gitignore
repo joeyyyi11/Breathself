@@ -35,3 +35,6 @@ Thumbs.db
 
 #cursor的东西
 .cursor/
+
+#自己本地学习用的笔记
+docs/

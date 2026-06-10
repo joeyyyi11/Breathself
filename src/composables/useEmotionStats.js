@@ -1,8 +1,35 @@
 import { computed } from 'vue'
 import { EMOTIONS } from '@/stores/notes'
 
+/** 统计时间范围选项 */
+export const TIME_RANGE_OPTIONS = [
+  { id: 'week', label: '一周内', ms: 7 * 24 * 60 * 60 * 1000 },
+  { id: 'month', label: '一个月内', ms: 30 * 24 * 60 * 60 * 1000 },
+  { id: 'year', label: '一年内', ms: 365 * 24 * 60 * 60 * 1000 },
+  { id: 'all', label: '全部数据', ms: null }
+]
+
+export const getTimeRangeLabel = (rangeId) =>
+  TIME_RANGE_OPTIONS.find((r) => r.id === rangeId)?.label ?? '全部数据'
+
+/** 按 createdAt 过滤笔记；无时间戳的笔记仅在「全部数据」中出现 */
+export function filterNotesByRange(notes, rangeId) {
+  const range = TIME_RANGE_OPTIONS.find((r) => r.id === rangeId)
+  if (!range || range.ms == null) return notes
+
+  const cutoff = Date.now() - range.ms
+  return notes.filter((n) => {
+    const ts = Number(n.createdAt)
+    return ts > 0 && ts >= cutoff
+  })
+}
+
+/** 占比 + 条数，如 30%（4条） */
+export const formatPercentWithCount = (percent, count) =>
+  `${percent}%（${count}条）`
+
 /**
- * 汇总全部笔记的情绪分布与强度，供洞察浮窗可视化使用
+ * 汇总笔记的情绪分布与强度，供洞察浮窗可视化使用
  */
 export function useEmotionStats(notesSource) {
   const analysis = computed(() => {
@@ -22,11 +49,14 @@ export function useEmotionStats(notesSource) {
           )
         : 0
 
+      const percent = total ? Math.round((count / total) * 1000) / 10 : 0
+
       return {
         ...emo,
         count,
-        percent: total ? Math.round((count / total) * 1000) / 10 : 0,
-        avgOpacity
+        percent,
+        avgOpacity,
+        label: formatPercentWithCount(percent, count)
       }
     })
 
@@ -51,16 +81,13 @@ export function useEmotionStats(notesSource) {
         ? `conic-gradient(${donutStops.join(', ')})`
         : 'conic-gradient(var(--color-ceramic) 0% 100%)'
 
-    const maxCount = withNotes.reduce((max, e) => Math.max(max, e.count), 0) || 1
-
     return {
       total,
       byEmotion,
       withNotes,
       dominant,
       overallAvg,
-      donutBackground,
-      maxCount
+      donutBackground
     }
   })
 

@@ -4,7 +4,9 @@
       <header class="insights-head">
         <div>
           <h2 id="insights-title">情绪洞察</h2>
-          <p class="insights-sub">基于面板全部 {{ analysis.total }} 条笔记的可视化分析</p>
+          <p class="insights-sub">
+            {{ rangeLabel }} · 共 {{ analysis.total }} 条笔记
+          </p>
         </div>
         <button type="button" class="close-btn" aria-label="关闭" @click="$emit('close')">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
@@ -14,10 +16,23 @@
         </button>
       </header>
 
+      <div class="range-row">
+        <button
+          v-for="r in TIME_RANGE_OPTIONS"
+          :key="r.id"
+          type="button"
+          class="btn btn-outline btn-sm range-btn"
+          :class="{ 'is-active': selectedRange === r.id }"
+          @click="selectedRange = r.id"
+        >
+          {{ r.label }}
+        </button>
+      </div>
+
       <div v-if="analysis.total === 0" class="empty-state">
         <div class="empty-icon">☕</div>
-        <p class="empty-title">还没有可分析的数据</p>
-        <p class="empty-desc">先写几条带情绪标签的笔记，再来查看你的觉察趋势。</p>
+        <p class="empty-title">{{ emptyTitle }}</p>
+        <p class="empty-desc">{{ emptyDesc }}</p>
       </div>
 
       <template v-else>
@@ -34,7 +49,7 @@
               {{ analysis.dominant?.name ?? '—' }}
             </strong>
             <span class="summary-hint">
-              {{ analysis.dominant ? `${analysis.dominant.percent}% 占比` : '暂无' }}
+              {{ analysis.dominant ? analysis.dominant.label : '暂无' }}
             </span>
           </div>
           <div class="summary-card">
@@ -60,35 +75,10 @@
               <li v-for="item in analysis.withNotes" :key="item.id">
                 <span class="legend-dot" :style="{ background: item.color }" />
                 <span class="legend-name">{{ item.name }}</span>
-                <span class="legend-meta">{{ item.count }} 条 · {{ item.percent }}%</span>
+                <span class="legend-meta">{{ item.label }}</span>
               </li>
             </ul>
           </div>
-        </section>
-
-        <!-- 数量分布 -->
-        <section class="panel-section">
-          <h3>数量分布</h3>
-          <ul class="bar-list">
-            <li v-for="item in analysis.byEmotion" :key="item.id">
-              <div class="bar-row">
-                <span class="bar-label">
-                  <span class="bar-dot" :style="{ background: item.color }" />
-                  {{ item.name }}
-                </span>
-                <span class="bar-count">{{ item.count }}</span>
-              </div>
-              <div class="bar-track">
-                <div
-                  class="bar-fill"
-                  :style="{
-                    width: `${(item.count / analysis.maxCount) * 100}%`,
-                    background: item.color
-                  }"
-                />
-              </div>
-            </li>
-          </ul>
         </section>
 
         <!-- 强度分布 -->
@@ -116,28 +106,46 @@
           </ul>
         </section>
       </template>
-
-      <div class="modal-actions">
-        <button type="button" class="btn btn-primary" @click="$emit('close')">知道了</button>
-      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useNotesStore } from '@/stores/notes'
-import { useEmotionStats } from '@/composables/useEmotionStats'
+import {
+  useEmotionStats,
+  TIME_RANGE_OPTIONS,
+  filterNotesByRange,
+  getTimeRangeLabel
+} from '@/composables/useEmotionStats'
 
 defineEmits(['close'])
 
 const store = useNotesStore()
+const selectedRange = ref('all')
 
 const allNotes = computed(() =>
   store.columns.flatMap((col) => col.notes)
 )
 
-const { analysis } = useEmotionStats(() => allNotes.value)
+const filteredNotes = computed(() =>
+  filterNotesByRange(allNotes.value, selectedRange.value)
+)
+
+const { analysis } = useEmotionStats(() => filteredNotes.value)
+
+const rangeLabel = computed(() => getTimeRangeLabel(selectedRange.value))
+
+const emptyTitle = computed(() =>
+  allNotes.value.length === 0 ? '还没有可分析的数据' : '该时间范围内暂无笔记'
+)
+
+const emptyDesc = computed(() =>
+  allNotes.value.length === 0
+    ? '先写几条带情绪标签的笔记，再来查看你的觉察趋势。'
+    : '试试切换到「全部数据」或其他时间范围。'
+)
 </script>
 
 <style scoped>
@@ -161,6 +169,25 @@ const { analysis } = useEmotionStats(() => allNotes.value)
 .insights-sub {
   font-size: 1.3rem;
   color: var(--color-text-soft);
+}
+
+.range-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: var(--space-3);
+}
+
+.range-btn {
+  font-size: 1.25rem;
+  padding: 5px 14px;
+  min-height: 32px;
+}
+
+.range-btn.is-active {
+  background: var(--color-green-accent);
+  color: var(--color-white);
+  border-color: var(--color-green-accent);
 }
 
 .close-btn {
@@ -407,9 +434,5 @@ const { analysis } = useEmotionStats(() => allNotes.value)
 
 .bar-fill-soft {
   opacity: 0.72;
-}
-
-.modal-actions {
-  margin-top: var(--space-2);
 }
 </style>
