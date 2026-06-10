@@ -32,3 +32,6 @@ Thumbs.db
 # 临时缓存
 .cache/
 *.tmp
+
+#cursor的东西
+.cursor/
