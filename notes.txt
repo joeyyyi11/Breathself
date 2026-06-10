@@ -9,4 +9,7 @@
 
     src/views/BreathView.vue  → 只有这个页面用的样式（scoped）
     src/components/BreathOrb.vue → 只有圆球用的样式（scoped）
--
+
+    全站按钮、输入框——components.css
+    颜色、间距变量——variables.css
+    某个页面/组件独有——该 .vue 的 <style scoped>

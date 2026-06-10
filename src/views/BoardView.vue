@@ -4,12 +4,24 @@
 
     <div class="board-header">
       <div class="header-inner">
-        <div>
+        <div class="header-text">
           <h1 class="board-title">我的觉察面板</h1>
           <p class="board-sub">
             共 {{ store.totalNotes }} 条笔记 · {{ store.columns.length }} 个分类
           </p>
         </div>
+        <button
+          type="button"
+          class="btn btn-outline insights-btn"
+          @click="insightsOpen = true"
+        >
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 20V10" />
+            <path d="M12 20V4" />
+            <path d="M6 20v-6" />
+          </svg>
+          情绪洞察
+        </button>
       </div>
     </div>
 
@@ -56,6 +68,12 @@
       @save="onSaveColumn"
       @delete="onDeleteColumn"
     />
+
+    <!-- 情绪洞察浮窗 -->
+    <EmotionInsightsModal
+      v-if="insightsOpen"
+      @close="insightsOpen = false"
+    />
   </div>
 </template>
 
@@ -66,9 +84,12 @@ import AppNav from '@/components/AppNav.vue'
 import NoteColumn from '@/components/NoteColumn.vue'
 import NoteModal from '@/components/NoteModal.vue'
 import ColumnModal from '@/components/ColumnModal.vue'
+import EmotionInsightsModal from '@/components/EmotionInsightsModal.vue'
 import FrapButton from '@/components/FrapButton.vue'
 
 const store = useNotesStore()
+
+const insightsOpen = ref(false)
 
 // ----- 笔记弹窗 -----
 const noteModalOpen = ref(false)
@@ -180,6 +201,16 @@ const onDeleteColumn = () => {
 .header-inner {
   max-width: 1600px;
   margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.insights-btn {
+  flex-shrink: 0;
+  margin-top: 4px;
 }
 
 .board-title {
