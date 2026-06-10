@@ -1,0 +1,12 @@
+-普通css不能用单行注释 //，得用块注释/**/。
+    <style scoped>          → 纯 CSS
+    <style lang="scss" scoped> → 才能用 // 和嵌套
+-增加z-index，层级遮挡关系，确保按键一直在最上方，不被动画遮挡而不能点。
+-   src/styles/
+  variables.css   → 颜色、间距等变量（--color-green-accent）
+  base.css        → 全局基础样式
+  components.css  → 通用按钮 .btn、.btn-ghost 等
+
+    src/views/BreathView.vue  → 只有这个页面用的样式（scoped）
+    src/components/BreathOrb.vue → 只有圆球用的样式（scoped）
+-

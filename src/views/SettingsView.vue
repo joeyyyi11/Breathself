@@ -52,7 +52,7 @@
           <label class="theme-card is-active">
             <span class="theme-dot" style="background: #00754A" />
             <div>
-              <strong>Starbucks 默认</strong>
+              <strong>默认</strong>
               <span>暖奶油画布，四级绿系</span>
             </div>
           </label>

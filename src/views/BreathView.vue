@@ -42,12 +42,14 @@
         </div>
       </div>
 
-      <!-- 呼吸圆球 -->
+      <!-- 呼吸圆球：未开始时点击圆球直接开始 -->
       <div class="orb-area" :class="{ 'has-started': sessionStarted }">
         <BreathOrb
           :scale="orbScale"
-          :phase-label="phaseLabel"
+          :phase-label="displayPhaseLabel"
           :running="breathRunning"
+          :clickable="!sessionStarted"
+          @click="handleOrbClick"
         />
       </div>
 
@@ -75,22 +77,13 @@
 
       <!-- 操作按钮 -->
       <div class="action-row">
-        <!-- 跳过按钮：运行时 / 结束后显示 -->
+        <!-- 跳过：未开始 / 进行中均可直接进入笔记面板 -->
         <button
-          v-if="sessionStarted && !finished"
+          v-if="!finished"
           class="btn btn-ghost"
           @click="skipToBoard"
         >
           跳过 →
-        </button>
-
-        <!-- 开始按钮 -->
-        <button
-          v-if="!sessionStarted"
-          class="btn btn-primary btn-lg"
-          @click="handleStart"
-        >
-          开始呼吸
         </button>
 
         <!-- 重新开始（结束后） -->
@@ -170,9 +163,17 @@ watch(finished, (isFin) => {
   }
 })
 
+const displayPhaseLabel = computed(() =>
+  sessionStarted.value ? phaseLabel.value : '开始深呼吸'
+)
+
 const handleStart = () => {
   sessionStarted.value = true
   breathStart(selectedDuration.value)
+}
+
+const handleOrbClick = () => {
+  if (!sessionStarted.value) handleStart()
 }
 
 const handleRestart = () => {
@@ -293,18 +294,22 @@ h1 {
 
 /* Orb area */
 .orb-area {
+  position: relative;
+  z-index: 0; /* 圆球区域置于底层，配合 action-row 的 z-index 避免遮挡按钮 */
   display: flex;
   align-items: center;
   justify-content: center;
   transition: opacity var(--duration-base) ease;
 }
 
-.orb-area.has-started .orb-wrap {
+.orb-area:not(.has-started) :deep(.orb-wrap.is-clickable) {
   cursor: pointer;
 }
 
 /* Progress */
 .progress-section {
+  position: relative;
+  z-index: 1;
   width: 100%;
   max-width: 360px;
   display: flex;
@@ -375,6 +380,8 @@ h1 {
 
 /* Action row */
 .action-row {
+  position: relative;
+  z-index: 2;  /* 最最外面，以及注意 */
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
