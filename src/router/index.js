@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
+//配置 映射
 const routes = [
   {
     path: '/',
@@ -33,6 +34,7 @@ const router = createRouter({
   }
 })
 
+//更标题
 router.afterEach((to) => {
   if (to.meta?.title) {
     document.title = to.meta.title

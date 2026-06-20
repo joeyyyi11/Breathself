@@ -1,3 +1,4 @@
+  //语义化标签，动态渲染
 <template>
   <article
     class="note-card"
@@ -51,11 +52,11 @@ const hexToRgb = (hex) => {
   }
 }
 
-// 用情绪色 + 透明度生成背景，叠在白色卡上
+// 情绪色+透明度生成背景，叠在白色卡上
 const cardStyle = computed(() => {
   const { r, g, b } = hexToRgb(emotion.value.color)
   const alpha = Math.max(0.08, Math.min(1, props.note.opacity / 100))
-  // 顶部颜色稍重一些，营造层次
+  // 顶部颜色稍重
   const bg = `linear-gradient(180deg, rgba(${r},${g},${b},${alpha}) 0%, rgba(${r},${g},${b},${(alpha * 0.85).toFixed(3)}) 100%), #ffffff`
   // const bg = `linear-gradient(180deg, rgba(${r},${g},${b},${alpha}) 0%, rgba(${r},${g},${b},${(alpha * 0.85).toFixed(3)}) 100%)`
 

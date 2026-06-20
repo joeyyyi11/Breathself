@@ -3,7 +3,7 @@ import { ref, computed, watch } from 'vue'
 
 const STORAGE_KEY = 'awareness_notes_v1'
 
-// 6 个情绪标签：语义色严格按需求来
+//6个情绪标签
 export const EMOTIONS = [
   { id: 'anxiety',   name: '焦虑', color: '#D2691E' },
   { id: 'calm',      name: '平静', color: '#1E3932' },
@@ -120,6 +120,7 @@ const defaultState = () => ({
   }
 })
 
+//持久化
 const loadFromStorage = () => {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
@@ -165,7 +166,7 @@ export const useNotesStore = defineStore('notes', () => {
     columns.value.reduce((sum, c) => sum + c.notes.length, 0)
   )
 
-  // ---- Column CRUD ----
+  // ---- Column crud ----
   const addColumn = ({ name = '新分类', color = '#00754A' } = {}) => {
     columns.value.push({
       id: uid('col'),
@@ -185,7 +186,7 @@ export const useNotesStore = defineStore('notes', () => {
     if (idx !== -1) columns.value.splice(idx, 1)
   }
 
-  // ---- Note CRUD ----
+  // ---- Note crud----
   const addNote = (columnId, payload) => {
     const col = columns.value.find((c) => c.id === columnId)
     if (!col) return null
@@ -231,7 +232,7 @@ export const useNotesStore = defineStore('notes', () => {
     settings.value = { ...settings.value, ...payload }
   }
 
-  // ---- Data Import / Export ----
+  //备份
   const exportJSON = () => {
     return JSON.stringify(
       { columns: columns.value, settings: settings.value, exportedAt: Date.now() },
